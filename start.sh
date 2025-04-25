@@ -1,5 +1,5 @@
-NAME_IMAGE="koh/cronjob"
-NAME_CONTAINER="cronjob"
+NAME_IMAGE="zdk/zcrons"
+NAME_CONTAINER="zcrons"
 TAG="latest"
 DOCNET=bridge-net
 LOC_PORT=9978
