@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "node atdd/playtest.js",
-    "start": "node server.js"
+    "start": "node src/server.js"
   },
   "keywords": [],
   "author": "",
