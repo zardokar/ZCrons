@@ -2,6 +2,8 @@ NAME_IMAGE="koh/cronjob"
 NAME_CONTAINER="cronjob"
 TAG="latest"
 DOCNET=bridge-net
+LOC_PORT=9978
+PUB_PORT=9978
 
 sudo docker stop $NAME_CONTAINER
 
@@ -13,7 +15,7 @@ sudo docker run --name $NAME_CONTAINER\
 	--network $DOCNET \
 	--restart always \
 	--log-opt max-size=1g --log-opt max-file=1 \
-	-p 7992:7992 \
+	-p $PUB_PORT:$LOC_PORT \
 	-d $NAME_IMAGE:$TAG
 
 # Clean Container
