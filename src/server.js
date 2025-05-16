@@ -89,11 +89,14 @@ function request(protocol_lib,method,url,datetime_str)
 	// Start request and set callback for response
 	const req = protocol.request(options, (res) => {
 		let respbody = ''
+
+		console.log('Status Code:', res.statusCode)
+
 		res.on('data', (chunk) => {
 			respbody += chunk
 		})
 		res.on('end', () => {
-			console.log('Response:', respbody.substring(0,50))
+			console.log('Response:', respbody.substring(0,150))
 		})
 	})
 	req.on('error', (e) => {
