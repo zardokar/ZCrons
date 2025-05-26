@@ -9,19 +9,14 @@ console.log(`Start server at port : ${PORT}`)
 // =============================================================================================
 let req_count 	= 0
 // =============================================================================================
-function onRequest(req,resp)
+async function onRequest(req,resp)
 {
 	req_count	   	   += 1
-	const now 			= new Date()
-	const hour 			= pad(now.getHours())
-	const min 			= pad(now.getMinutes())
-	const sec 			= pad(now.getSeconds())
-
-	const date_offset   = isNaN( parseInt(env.DATE_OFFSET) )  === false ? parseInt(env.DATE_OFFSET) : 0
-	const dtstr 		= `${now.getFullYear()}-${pad(now.getMonth()+1)}-${pad(now.getDate() + date_offset )} ${hour}:${min}:${sec}`
 	
-	const result 		= `Active at :  ${req_count} | ${dtstr}`
-	checkEnv(dtstr)
+	const result 		= `Active at :  ${req_count} | ${ getDate() }`
+	
+	await checkEnv(dtstr)
+
 	console.log(result)
 
 	resp.writeHead(200, { 'Content-Type' : 'text/plain' })
@@ -29,10 +24,30 @@ function onRequest(req,resp)
 	resp.end()
 }
 // =============================================================================================
-async function checkEnv(datetime_str='')
+function getDate(process_env='')
 {
-	await process.loadEnvFile('.env')
+	let env 			= {}
 
+	if( process_env !== '')
+	{
+		env 			= process_env
+	}
+	
+	const now 			= new Date()
+	const hour 			= pad(now.getHours())
+	const min 			= pad(now.getMinutes())
+	const sec 			= pad(now.getSeconds())
+
+	const date_offset   = isNaN( parseInt(env.DATE_OFFSET) )  === false ? parseInt(env.DATE_OFFSET) : 0
+	return `${now.getFullYear()}-${pad(now.getMonth()+1)}-${pad(now.getDate() + date_offset )} ${hour}:${min}:${sec}`
+}
+// =============================================================================================
+async function checkEnv()
+{
+	const env_path 		= '.env'
+	await process.loadEnvFile(env_path)
+	await getDate(process.env)
+	
 	const env 			= process.env
 	const target_count 	= parseInt(env.TARGET_COUNT)
 
