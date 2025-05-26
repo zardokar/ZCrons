@@ -14,10 +14,12 @@ if [ ! -f .env ]; then
 fi
 # ---------------------------------------------------------------------
 # Load .env
-export $(cat .env 2>/dev/null | xargs)
+set -a
+. <(grep -v '^#' .env | grep '=' | sed 's/\r$//')
+set +a
 # ---------------------------------------------------------------------
 # Check ENV Variables
-REQUIRED_VARS="CRON_FORM TARGET_COUNT TARGET_01_URL TARGET_01_METHOD"
+REQUIRED_VARS="CRON_FORM TARGET_COUNT"
 for VAR in $REQUIRED_VARS; do
   if [ -z "${!VAR}" ]; then
     echo "❌ Environment variable $VAR is not set"
@@ -28,7 +30,7 @@ done
 
 sudo docker stop $NAME_CONTAINER
 
-sudo docker rm $NAME_CONTAINER
+sudo docker rm -f $NAME_CONTAINER 2>/dev/null || true
 
 sudo docker build \
 	--build-arg CRON_FORM="$CRON_FORM" \
