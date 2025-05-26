@@ -15,7 +15,7 @@ async function onRequest(req,resp)
 	
 	const result 		= `Active at :  ${req_count} | ${ getDate() }`
 	
-	await checkEnv(dtstr)
+	await checkEnv()
 
 	console.log(result)
 
@@ -46,7 +46,8 @@ async function checkEnv()
 {
 	const env_path 		= '.env'
 	await process.loadEnvFile(env_path)
-	await getDate(process.env)
+	
+	const datetime_str 	= await getDate(process.env)
 	
 	const env 			= process.env
 	const target_count 	= parseInt(env.TARGET_COUNT)
