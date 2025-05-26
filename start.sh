@@ -18,15 +18,6 @@ set -a
 . <(grep -v '^#' .env | grep '=' | sed 's/\r$//')
 set +a
 # ---------------------------------------------------------------------
-# Check ENV Variables
-REQUIRED_VARS="CRON_FORM TARGET_COUNT"
-for VAR in $REQUIRED_VARS; do
-  if [ -z "${!VAR}" ]; then
-    echo "❌ Environment variable $VAR is not set"
-    exit 1
-  fi
-done
-# ---------------------------------------------------------------------
 
 sudo docker stop $NAME_CONTAINER
 
