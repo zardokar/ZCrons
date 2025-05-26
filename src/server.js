@@ -46,9 +46,11 @@ async function checkEnv()
 {
 	const env_path 		= '.env'
 	await process.loadEnvFile(env_path)
-	
+
 	const datetime_str 	= await getDate(process.env)
 	
+	console.log(`checkEnv at : ${datetime_str}`)
+
 	const env 			= process.env
 	const target_count 	= parseInt(env.TARGET_COUNT)
 
