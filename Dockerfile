@@ -1,8 +1,12 @@
 FROM node:23.11-alpine
-# set timezone ----------------------------------------------------
+
+# set timezone -------------------------------------------------
 ARG TZ='Asia/Bangkok'
 
+ARG CRON_FORM="0 0 * * *"
+# --------------------------------------------------------------
 ENV TZ ${TZ}
+# --------------------------------------------------------------
 
 RUN apk update
 
@@ -26,6 +30,6 @@ RUN apk update
 RUN apk add --no-cache bash curl dcron
 # --------------------------------------------------------------
 RUN chmod +x /app/callscript.sh
-RUN echo "0 0 * * * /bin/bash /app/callscript.sh >> /app/cron.log 2>&1" > /etc/crontabs/root
+RUN echo "${CRON_FORM} /bin/bash /app/callscript.sh >> /app/cron.log 2>&1" > /etc/crontabs/root
 # --------------------------------------------------------------
 CMD sh -c "crond && crontab -l && npm start"
