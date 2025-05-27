@@ -42,7 +42,7 @@ function getDate(process_env='')
 	const sec 			= pad(future.getSeconds())
 
 	if( isNaN( offset ) === false ){
-		future.setDate(today.getDate() + offset )
+		future.setDate(now.getDate() + offset )
 	}
 
 	return `${future.getFullYear()}-${pad(future.getMonth()+1)}-${pad(future.getDate() )} ${hour}:${min}:${sec}`
