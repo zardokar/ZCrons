@@ -34,12 +34,18 @@ function getDate(process_env='')
 	}
 	
 	const now 			= new Date()
-	const hour 			= pad(now.getHours())
-	const min 			= pad(now.getMinutes())
-	const sec 			= pad(now.getSeconds())
+	const future 		= new Date(now)
+	const offset 		= parseInt(env.DATE_OFFSET)
 
-	const date_offset   = isNaN( parseInt(env.DATE_OFFSET) )  === false ? parseInt(env.DATE_OFFSET) : 0
-	return `${now.getFullYear()}-${pad(now.getMonth()+1)}-${pad(now.getDate() + date_offset )} ${hour}:${min}:${sec}`
+	const hour 			= pad(future.getHours())
+	const min 			= pad(future.getMinutes())
+	const sec 			= pad(future.getSeconds())
+
+	if( isNaN( offset ) === false ){
+		future.setDate(today.getDate() + offset )
+	}
+
+	return `${future.getFullYear()}-${pad(future.getMonth()+1)}-${pad(future.getDate() )} ${hour}:${min}:${sec}`
 }
 // =============================================================================================
 async function checkEnv()
