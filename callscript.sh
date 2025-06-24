@@ -1,1 +1,1 @@
-curl 127.0.0.1:9978
+curl --location --request POST 'http://localhost:9978'
