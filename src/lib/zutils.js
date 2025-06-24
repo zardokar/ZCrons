@@ -75,6 +75,7 @@ async function checkEnv(client_request = {})
 								console.log(`${key} has been launch!`)
 								const resResp 			= await request(protocol_lib, method ,url, datetime_str)
 								requestedObj.requested 	= true
+								console.log( `Payload : `, resResp.payload )
 								resolve( { ...resResp, ...requestedObj } )
 							}
 						}
