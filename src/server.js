@@ -14,11 +14,8 @@ async function onRequest(req,resp)
 {
 	req_count	   	   += 1
 	
-	const result 		= `Active at :  ${req_count} | ${ zutils.getDate() }`
-	
-	await zutils.checkEnv()
-
-	console.log(result)
+	const reqresp 		= await zutils.checkEnv(req)
+	const result 		= `Active at :  ${req_count} | ${ zutils.getDate() } | Requested : ${ reqresp.requested } (${reqresp.req_method}) `
 
 	resp.writeHead(200, { 'Content-Type' : 'text/plain' })
 	resp.write(result)
