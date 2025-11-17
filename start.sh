@@ -23,9 +23,19 @@ sudo docker stop $NAME_CONTAINER
 
 sudo docker rm -f $NAME_CONTAINER 2>/dev/null || true
 
-sudo docker build \
+# ---------------------------------------------------------------------
+# Check Image Existence
+
+if [[ "$(sudo docker images -q $NAME_IMAGE:$TAG 2> /dev/null)" == "" ]]; then
+  echo "⚠️ Image not found. Starting Build..."
+  
+  sudo docker build \
 	--build-arg CRON_FORM="$CRON_FORM" \
 	-t $NAME_IMAGE:$TAG . 
+else
+  echo "✅ Image found ($NAME_IMAGE:$TAG). Skipping Build."
+fi
+# ---------------------------------------------------------------------
 
 sudo docker run --name $NAME_CONTAINER\
 	--network $DOCNET \
